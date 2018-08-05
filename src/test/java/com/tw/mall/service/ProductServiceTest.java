@@ -18,7 +18,7 @@ import static org.mockito.BDDMockito.given;
 public class ProductServiceTest {
 
     @Mock
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     private ProductService productService;
 
@@ -50,8 +50,28 @@ public class ProductServiceTest {
         product.setName("test");
         given(productRepository.save(product)).willReturn(product);
         //when
-        productService.add(product);
+        Product addedProduct = productService.add(product);
         //then
+        assertThat(addedProduct).isEqualTo(product);
 
+    }
+
+    @Test
+    public void should_correctly_update_product_when_call_update() {
+        //given
+        Product productOld = new Product();
+        productOld.setName("test1");
+        productOld.setId(1);
+        Product productNew = new Product();
+        productNew.setName("test2");
+        productNew.setId(6);
+        int id = 1;
+        given(productRepository.findById(id)).willReturn(java.util.Optional.of(productOld));
+        given(productRepository.save(productNew)).willReturn(productNew);
+        //when
+        productOld = productService.update(id, productNew);
+        //then
+        assertThat(productOld.getName()).isEqualTo("test2");
+        assertThat(productOld.getId()).isEqualTo(1);
     }
 }
