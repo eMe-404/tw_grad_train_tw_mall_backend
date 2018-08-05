@@ -11,6 +11,7 @@ public class MallApplicationTests {
 
 	@Test
 	public void contextLoads() {
+
 	}
 
 }
