@@ -39,4 +39,6 @@ public class OrderServiceTest {
         Order addedOrder = orderService.add(addOrderRequest);
         assertThat(addedOrder.getTotalPrice()).isEqualTo(12);
     }
+
+
 }
