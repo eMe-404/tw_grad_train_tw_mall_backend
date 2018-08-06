@@ -62,7 +62,7 @@ public class OrderServiceTest {
         order.get().setTotalPrice(199);
         given(orderRepository.findById(id)).willReturn(order);
         //when
-        GetOrderResponse getOrderResponse2 = orderService.get(id);
+        Order getOrderResponse2 = orderService.get(id);
         //then
         assertThat(getOrderResponse2.getTotalPrice()).isEqualTo(199);
     }

@@ -1,7 +1,6 @@
 package com.tw.mall.service;
 
 import com.tw.mall.controller.requests.AddOrderRequest;
-import com.tw.mall.controller.response.GetOrderResponse;
 import com.tw.mall.entity.Order;
 import com.tw.mall.entity.OrderItem;
 import com.tw.mall.entity.Product;
@@ -34,14 +33,13 @@ public class OrderService {
         Order toAddedOrder = new Order();
         double totalPrice = 0;
         toAddedOrder.setCreateDate(new Date());
-
+        orderRepository.save(toAddedOrder);
         for (OrderItem orderItem : addOrderRequest.getOrderItems()) {
-            Product product = productRepository
-                    .findById(orderItem.getProductId())
-                    .orElseThrow(ProductNotFoundException::new);
-            totalPrice += orderItem.getCount() * product.getPrice();
-            orderItem.setOrderId(toAddedOrder.getId());
-            orderItemRepository.save(orderItem);
+            OrderItem orderItemNew = new OrderItem();
+            orderItemNew.setOrderId(toAddedOrder.getId());
+            orderItemNew.setCount(orderItem.getCount());
+            orderItemNew.setProductId(orderItem.getProductId());
+            orderItemRepository.save(orderItemNew);
 
         }
         toAddedOrder.setTotalPrice(totalPrice);
@@ -49,14 +47,8 @@ public class OrderService {
     }
 
 
-    public GetOrderResponse get(int id) {
-        Order orderBefore = orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
-        GetOrderResponse getOrderResponse = new GetOrderResponse();
-        getOrderResponse.setOrderId(orderBefore.getId());
-        getOrderResponse.setCreatedDate(orderBefore.getCreateDate());
-        getOrderResponse.setOrderItems(orderBefore.getOrderItems());
-        getOrderResponse.setTotalPrice(orderBefore.getTotalPrice());
-        return getOrderResponse;
+    public Order get(int id) {
+        return orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
 
     }
 }

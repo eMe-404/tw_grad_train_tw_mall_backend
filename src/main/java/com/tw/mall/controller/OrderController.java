@@ -1,7 +1,6 @@
 package com.tw.mall.controller;
 
 import com.tw.mall.controller.requests.AddOrderRequest;
-import com.tw.mall.controller.response.GetOrderResponse;
 import com.tw.mall.entity.Order;
 import com.tw.mall.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +32,8 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<GetOrderResponse> get(@PathVariable int id) {
-        GetOrderResponse getOrderResponse = orderService.get(id);
+    private ResponseEntity<Order> get(@PathVariable int id) {
+        Order getOrderResponse = orderService.get(id);
         return ResponseEntity.ok(getOrderResponse);
     }
 }
