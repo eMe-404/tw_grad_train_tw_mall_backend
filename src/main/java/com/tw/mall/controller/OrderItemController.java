@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
@@ -43,6 +42,7 @@ public class OrderItemController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity remove(@PathVariable int id) {
-        return orderItemService.remove(id);
+        orderItemService.remove(id);
+        return ResponseEntity.ok().build();
     }
 }

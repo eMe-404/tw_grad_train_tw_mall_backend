@@ -38,13 +38,13 @@ public class ProductController {
     @PostMapping
     public ResponseEntity add(@RequestBody Product product) {
         productService.add(product);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.created(URI.create("/products/" + product.getId())).build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable int id, @RequestBody Product product) {
         productService.update(id, product);
-        return ResponseEntity.created(URI.create("/product/" + id)).build();
+        return ResponseEntity.noContent().build();
     }
 
     @ExceptionHandler
