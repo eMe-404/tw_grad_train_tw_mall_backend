@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <product name="apple" price="5" unit="元"/>
+    <product name="apple2" price="15" unit="元"/>
+    <product name="apple3" price="25" unit="元"/>
+</dataset>
