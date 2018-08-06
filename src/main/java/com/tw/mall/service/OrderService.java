@@ -5,7 +5,6 @@ import com.tw.mall.controller.response.GetOrderResponse;
 import com.tw.mall.entity.Order;
 import com.tw.mall.entity.OrderItem;
 import com.tw.mall.entity.Product;
-import com.tw.mall.exeption.OrderItemNotFoundException;
 import com.tw.mall.exeption.OrderNotFoundException;
 import com.tw.mall.exeption.ProductNotFoundException;
 import com.tw.mall.repository.OrderItemRepository;
@@ -15,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrderService {
