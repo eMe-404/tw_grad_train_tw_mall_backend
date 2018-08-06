@@ -29,9 +29,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.flywaydb:flyway-core')
     runtime('mysql:mysql-connector-java')
-    compile 'org.dbunit:dbunit:2.5.4'
-    testcompile('org.dbunit:dbunit:2.5.0')
-    testcompile('com.github.springtestdbunit:spring-test-dbunit:1.2.0')
+    compile 'org.projectlombok:lombok:1.18.2'
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile 'io.rest-assured:rest-assured:3.1.0'
 

@@ -40,6 +40,8 @@ public class OrderService {
                     .findById(orderItem.getProductId())
                     .orElseThrow(ProductNotFoundException::new);
             totalPrice += orderItem.getCount() * product.getPrice();
+            orderItem.setOrderId(toAddedOrder.getId());
+            orderItemRepository.save(orderItem);
 
         }
         toAddedOrder.setTotalPrice(totalPrice);
