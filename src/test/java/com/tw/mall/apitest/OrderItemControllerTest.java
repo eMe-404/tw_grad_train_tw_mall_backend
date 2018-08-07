@@ -4,9 +4,8 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
-import com.tw.mall.entity.Product;
+import com.tw.mall.entity.OrderItem;
 import io.restassured.http.ContentType;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,8 +17,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.notNullValue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
@@ -27,64 +24,59 @@ import static org.hamcrest.Matchers.notNullValue;
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
 @ActiveProfiles("test")
-public class ProductControllerTest {
-
+public class OrderItemControllerTest {
     @LocalServerPort
     private int port;
 
-    @Before
-    @DatabaseSetup("classpath:/product_data/productSampleData.xml")
-    public void setUp() {
-    }
-
     @Test
-    public void should_return_all_products_when_call_addAll() {
-        given()
-                .port(port)
-                .when()
-                .get("/products")
-                .then()
-                .body("id", contains(1, 2));
-    }
-
-    @Test
-    @DatabaseSetup("classpath:/product_data/productSampleData.xml")
-    @ExpectedDatabase(assertionMode = DatabaseAssertionMode.NON_STRICT, value = "classpath:/product_data/expectedSampleData.xml")
-    public void should_add_a_product() {
-        Product product = new Product();
-        product.setName("apple3");
-        product.setPrice(25);
-        product.setUnit("元");
+    @DatabaseSetup("classpath:/order_item_data/orderItemInitData.xml")
+    @ExpectedDatabase(assertionMode = DatabaseAssertionMode.NON_STRICT, value = "classpath:/order_item_data/orderItemExpectedAdd.xml")
+    public void should_add_orderItem_when_call_add() {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setCount(66);
+        orderItem.setOrderId(1);
+        orderItem.setProductId(2);
         given()
                 .port(port)
                 .when()
                 .request()
                 .contentType(ContentType.JSON)
-                .body(product)
-                .post("/products")
+                .body(orderItem)
+                .post("/orderItems")
                 .then()
-                .statusCode(201)
-                .header("location", notNullValue());
-
+                .statusCode(201);
     }
 
     @Test
-    @DatabaseSetup("classpath:/product_data/productSampleData.xml")
-    @ExpectedDatabase(assertionMode = DatabaseAssertionMode.NON_STRICT, value = "classpath:/product_data/expectedUpdateData.xml")
-    public void should_update_when_call_update() {
-        Product product = new Product();
-        product.setName("updatedApple");
-        product.setUnit("元");
-        product.setPrice(10);
+    @DatabaseSetup("classpath:/order_item_data/orderItemInitData.xml")
+    @ExpectedDatabase(assertionMode = DatabaseAssertionMode.NON_STRICT, value = "classpath:/order_item_data/orderItemExpectedUpdate.xml")
+    public void should_update_order_item_when_call_update() {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setCount(888);
+        orderItem.setOrderId(1);
+        orderItem.setProductId(3);
         given()
                 .port(port)
                 .when()
                 .request()
                 .contentType(ContentType.JSON)
-                .body(product)
-                .put("/products/1")
+                .body(orderItem)
+                .put("/orderItems/2")
                 .then()
                 .statusCode(204);
 
     }
+
+    @Test
+    @DatabaseSetup("classpath:/order_item_data/orderItemInitData.xml")
+    @ExpectedDatabase(assertionMode = DatabaseAssertionMode.NON_STRICT, value = "classpath:/order_item_data/orderItemExpectedDelete.xml")
+    public void should_delete_order_item_when_call_delete() {
+        given()
+                .port(port)
+                .when()
+                .delete("/orderItems/2")
+                .then()
+                .statusCode(200);
+    }
+
 }

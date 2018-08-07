@@ -17,7 +17,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "`order`")
+@Table(name = "tw_order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

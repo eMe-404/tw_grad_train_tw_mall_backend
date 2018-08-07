@@ -35,9 +35,9 @@ public class OrderItemController {
     @PutMapping("/{id}")
     public ResponseEntity update(@RequestBody OrderItem orderItem,
                                  @PathVariable int id) {
-        OrderItem updatedOrderItem = orderItemService.update(id, orderItem);
+        orderItemService.update(id, orderItem);
         return ResponseEntity
-                .created(URI.create("/orderItems" + updatedOrderItem.getId())).build();
+                .noContent().build();
     }
 
     @DeleteMapping("/{id}")
