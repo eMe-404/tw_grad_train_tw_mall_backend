@@ -37,7 +37,8 @@ public class OrderService {
         orderRepository.save(toAddedOrder);
         for (OrderItem orderItem : addOrderRequest.getOrderItems()) {
             totalPrice = getTotalPrice(totalPrice, orderItem);
-            cascadeAddOrderItem(toAddedOrder, orderItem);
+            orderItem.setOrderId(toAddedOrder.getId());
+            orderItemRepository.save(orderItem);
         }
         toAddedOrder.setTotalPrice(totalPrice);
         return orderRepository.save(toAddedOrder);
@@ -54,14 +55,6 @@ public class OrderService {
                 .orElseThrow(ProductNotFoundException::new);
         totalPrice += orderItem.getCount() * product.getPrice();
         return totalPrice;
-    }
-
-    private void cascadeAddOrderItem(Order toAddedOrder, OrderItem orderItem) {
-        OrderItem orderItemNew = new OrderItem();
-        orderItemNew.setOrderId(toAddedOrder.getId());
-        orderItemNew.setCount(orderItem.getCount());
-        orderItemNew.setProductId(orderItem.getProductId());
-        orderItemRepository.save(orderItemNew);
     }
 
 }
