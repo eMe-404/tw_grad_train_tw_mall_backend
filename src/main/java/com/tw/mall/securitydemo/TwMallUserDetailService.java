@@ -9,23 +9,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import static java.lang.String.format;
-
 @Component
 public class TwMallUserDetailService implements UserDetailsService {
-    private final UserRepository userRepository;
-
     @Autowired
-    public TwMallUserDetailService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByName(username)
-                .orElseThrow(() -> new UsernameNotFoundException(format("%s dose't exist!!!", username)));
-        return new JwtUser(user);
+        User user = userRepository.findByUsername(username).orElseThrow(null);
 
-
+        if (user == null) {
+            throw new UsernameNotFoundException(String.format("%s dosen't exist!", username));
+        } else {
+            return new JwtUser(user);
+        }
     }
 }

@@ -20,5 +20,6 @@ public class OrderItem {
     private int orderId;
     @Column(name = "product_id")
     private int productId;
+
     private int count;
 }

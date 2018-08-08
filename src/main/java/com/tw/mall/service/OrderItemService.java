@@ -4,7 +4,6 @@ import com.tw.mall.entity.OrderItem;
 import com.tw.mall.exeption.OrderItemNotFoundException;
 import com.tw.mall.repository.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service

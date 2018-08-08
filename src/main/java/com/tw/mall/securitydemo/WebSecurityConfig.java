@@ -1,5 +1,4 @@
 package com.tw.mall.securitydemo;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,15 +11,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class config extends WebSecurityConfigurerAdapter {
-
-    private final TwMallUserDetailService userDetailsService;
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    public config(TwMallUserDetailService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
+    private TwMallUserDetailService userDetailsService;
 
     @Autowired
     public void globalConfig(AuthenticationManagerBuilder auth) throws Exception {
@@ -34,16 +28,15 @@ public class config extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/products")
-                .permitAll()
+                .antMatchers("/login","/products").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and()
+                .csrf().disable();
     }
 }
-

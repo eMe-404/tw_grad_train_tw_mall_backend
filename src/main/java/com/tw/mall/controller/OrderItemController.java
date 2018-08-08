@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/orderItems")
+@RequestMapping("/orders/1/orderItems")
 public class OrderItemController {
     private final OrderItemService orderItemService;
 

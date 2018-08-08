@@ -1,5 +1,6 @@
 package com.tw.mall.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,4 +29,7 @@ public class Order {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     List<OrderItem> orderItems = new ArrayList<>();
+    @JsonIgnore
+    private Long userId;
+
 }

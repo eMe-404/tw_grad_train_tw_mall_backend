@@ -1,65 +1,68 @@
 package com.tw.mall.login;
 
 import com.tw.mall.entity.User;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
-@Data
+@Getter
+@Setter
 public class JwtUser implements UserDetails {
-    private int id;
+    private Long id;
     private String username;
+    private String fullname;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
     public JwtUser(User user) {
-        this.id = user.getId();
-        this.username = user.getName();
+        this.id = user.getUserId();
+        this.username = user.getUsername();
         this.password = user.getPassword();
-        this.authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getAuthority().name()));
+        this.authorities = Arrays.asList(new SimpleGrantedAuthority(user.getAuthority().name()));
+        this.fullname = user.getFullname();
     }
 
     public JwtUser() {
-
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return username;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
+
