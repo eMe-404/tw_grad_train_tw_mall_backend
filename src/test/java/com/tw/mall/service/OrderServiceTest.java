@@ -2,10 +2,10 @@ package com.tw.mall.service;
 
 import com.tw.mall.controller.requests.AddOrderRequest;
 import com.tw.mall.controller.response.GetOrderResponse;
+import com.tw.mall.controller.response.ResponseOrder;
 import com.tw.mall.entity.Order;
 import com.tw.mall.repository.OrderItemRepository;
 import com.tw.mall.repository.OrderRepository;
-import com.tw.mall.repository.ProductRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,8 +26,6 @@ public class OrderServiceTest {
     @Mock
     private OrderRepository orderRepository;
 
-    @Mock
-    private ProductRepository productRepository;
 
     @Mock
     private OrderItemRepository orderItemRepository;
@@ -36,7 +34,7 @@ public class OrderServiceTest {
 
     @Before
     public void setUp() {
-        orderService = new OrderService(orderRepository, productRepository, orderItemRepository);
+        orderService = new OrderService(orderRepository, orderItemRepository);
     }
 
     @Test
@@ -63,7 +61,7 @@ public class OrderServiceTest {
         order.get().setTotalPrice(199);
         given(orderRepository.findById(1)).willReturn(order);
         //when
-        List<Order> getOrderResponse2 = orderService.getAll(id);
+        List<ResponseOrder> getOrderResponse2 = orderService.getAll(id);
         //then
         assertThat(getOrderResponse2.get(0).getTotalPrice()).isEqualTo(199);
     }

@@ -5,17 +5,13 @@ import com.tw.mall.controller.response.ResponseOrder;
 import com.tw.mall.controller.response.ResponseOrderItem;
 import com.tw.mall.entity.Order;
 import com.tw.mall.entity.OrderItem;
-import com.tw.mall.entity.Product;
-import com.tw.mall.exeption.ProductNotFoundException;
+import com.tw.mall.controller.VO.Product;
 import com.tw.mall.repository.OrderItemRepository;
 import com.tw.mall.repository.OrderRepository;
-import com.tw.mall.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,15 +19,13 @@ import java.util.stream.Collectors;
 @Service
 public class OrderService {
     private OrderRepository orderRepository;
-    private ProductRepository productRepository;
     private OrderItemRepository orderItemRepository;
 
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, ProductRepository productRepository, OrderItemRepository orderItemRepository) {
+    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository) {
 
         this.orderRepository = orderRepository;
-        this.productRepository = productRepository;
         this.orderItemRepository = orderItemRepository;
     }
 
