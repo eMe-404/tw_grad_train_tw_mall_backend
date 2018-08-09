@@ -1,4 +1,4 @@
-package com.tw.mall.controller.response;
+package com.tw.mall.vo;
 
 import lombok.Data;
 
@@ -7,11 +7,10 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class ResponseOrder {
+public class OrderVO {
     private int id;
     private Date createDate;
     private double totalPrice;
-    List<ResponseOrderItem> responseOrderItems = new ArrayList<>();
+    List<OrderItemVO> orderItems = new ArrayList<>();
     private Long userId;
-
 }
